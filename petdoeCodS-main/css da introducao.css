@@ -1,0 +1,588 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+    /* Cores Primárias e de Destaque (do primeiro CSS) */
+    --primary-color: #000000; /* Azul Ciano - Cor principal */
+    --primary-color-dark: #2a8a99; /* Um tom mais escuro de primary-color para hover */
+    --accent-yellow: #ffd75e; /* Amarelo de destaque (usado em nav e talvez em outros elementos) */
+    --accent-red: #ff8f80; /* Vermelho/Coral de destaque (usado em service card) */
+
+    /* Cores de Texto */
+    --text-dark: #000000; /* Texto escuro (preto) - Ajustado para combinar com o contraste */
+    --text-light: #333333; /* Texto mais claro (cinza escuro) - Ajustado */
+    --white: #ffffff; /* Branco */
+    --extra-light: #f7f7f7; /* Fundo cinza claro - Correspondente ao --background-light-gray anterior */
+
+    /* Largura Máxima */
+    --max-width: 1200px;
+
+    /* CORES DO RODAPÉ */
+    --footer-background-color: #ffd75e; /* Laranja para o rodapé */
+    --footer-text-color: var(--text-dark); /* Preto para o texto do rodapé */
+    --footer-link-color: var(--text-dark); /* Preto para os links do rodapé */
+    --footer-link-hover-color: var(--primary-color); /* Azul Ciano para o hover dos links do rodapé */
+
+    /* NOVAS VARIÁVEIS PARA BOTÕES */
+    --button-general-bg-color: #ff8f80   ; /* Cor de fundo padrão para botões gerais */
+    --button-general-text-color: var(--white); /* Cor do texto padrão para botões gerais */
+    --button-general-border-color: #ff8f80; /* Cor da borda padrão para botões gerais */
+    --button-general-bg-hover-color: #40cee0; /* Cor de fundo padrão para hover de botões gerais */
+
+    /* Variáveis específicas para botões de Login e Cadastro na Navbar */
+    --nav-login-btn-bg: #ff8f80;
+    --nav-login-btn-text: var(--white);
+    --nav-login-btn-border: #ff8f80;
+    --nav-login-btn-hover-bg: #40cee0;
+    --nav-login-btn-hover-border: #40cee0;
+
+    --nav-register-btn-bg: transparent;
+    --nav-register-btn-text: #ffd75e;
+    --nav-register-btn-border: #ffd75e;
+    --nav-register-btn-hover-bg: #40cee0;
+    --nav-register-btn-hover-text: var(--white);
+    --nav-register-btn-hover-border: #40cee0;
+}
+
+/* Reset básico e tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.section__container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 0 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Botões gerais agora usam as novas variáveis */
+    background-color: var(--button-general-bg-color);
+    color: var(--button-general-text-color);
+    border: 1px solid var(--button-general-border-color);
+}
+
+.btn:hover {
+    background-color: var(--button-general-bg-hover-color);
+    border-color: var(--button-general-bg-hover-color);
+}
+
+.primary-btn {
+    /* Pode ser mantido assim se for o mesmo que .btn, ou ter cores únicas */
+    background-color: var(--button-general-bg-color);
+    color: var(--button-general-text-color);
+    border: 1px solid var(--button-general-border-color);
+}
+
+.primary-btn:hover {
+    background-color: var(--button-general-bg-hover-color);
+    border-color: var(--button-general-bg-hover-color);
+}
+
+.section__header {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section__subheader {
+    font-size: 1.1rem;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.section__description {
+    font-size: 1rem;
+    color: var(--text-light);
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Navbar */
+nav {
+    background-color: var(--white);
+    padding: 0.8rem 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+nav.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav__logo a {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.nav__menu__btn {
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* Esconder por padrão em telas maiores */
+    color: var(--primary-color);
+}
+
+.nav__links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav__links li a {
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+
+.nav__links li a:hover {
+    color: var(--primary-color);
+}
+
+.nav__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav__actions .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.nav__actions .btn.login-btn {
+    background-color: var(--nav-login-btn-bg); /* Usando variável específica do botão de login */
+    color: var(--nav-login-btn-text);
+    border: 1px solid var(--nav-login-btn-border);
+}
+
+.nav__actions .btn.login-btn:hover {
+    background-color: var(--nav-login-btn-hover-bg);
+    border-color: var(--nav-login-btn-hover-border);
+}
+
+.nav__actions .btn.register-btn {
+    background-color: var(--nav-register-btn-bg); /* Usando variável específica do botão de registro */
+    color: var(--nav-register-btn-text);
+    border: 1px solid var(--nav-register-btn-border);
+}
+
+.nav__actions .btn.register-btn:hover {
+    background-color: var(--nav-register-btn-hover-bg);
+    color: var(--nav-register-btn-hover-text);
+    border-color: var(--nav-register-btn-hover-border);
+}
+
+/* Main content padding */
+main {
+    padding-top: 80px; /* Espaço para a navbar fixa */
+}
+
+/* Intro Section (Hero) */
+.intro__section {
+    background-color: #40cee0;
+    padding: 80px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+.intro__section .section__container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.intro__section h4 {
+    font-size: 1.2rem;
+    color: #000000;
+    margin-bottom: 0.5rem;
+}
+
+.intro__section h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.intro__section h1 span {
+    color: #000000;
+}
+
+.intro__section h2 {
+    font-size: 2.2rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.intro__section p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.intro__image {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 2rem;
+}
+
+.intro__image img {
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Campaign Section */
+.campaign__section {
+    background-color: #ffd75e;
+    color: var(--white);
+    padding: 80px 0;
+}
+
+.campaign__section h2,
+.campaign__section p {
+    color: #000000;
+}
+
+.campaign__section .btn {
+    /* Usando as variáveis gerais de botão aqui também */
+    background-color: var(--button-general-text-color); /* branco para o fundo do botão */
+    color: var(--button-general-bg-color); /* Azul Ciano para o texto */
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+}
+
+.campaign__section .btn:hover {
+    background-color: var(--extra-light);
+    color: var(--button-general-bg-color);
+}
+
+/* Services Section */
+.services__section {
+    padding: 80px 0;
+    background-color: #ffffff;
+}
+
+.services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding: 0 1rem;
+}
+
+.service__card {
+    background-color: #ff8f80;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.service__card img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1.5rem;
+    object-fit: contain;
+}
+
+.service__card h4 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 0.8rem;
+}
+
+.service__card p {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+/* Testimonial Section */
+.testimonial__section {
+    background-color: #40cee0;
+    padding: 80px 0;
+}
+
+.testimonial__card {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    background-color: #ffd75e;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.testimonial__card p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+.testimonial__author {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #000000;
+}
+
+/* Footer - CORES AJUSTADAS PARA O RODAPÉ LARANJA */
+footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    padding: 4rem 0;
+}
+
+.footer__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.footer__col h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--footer-link-color);
+}
+
+.footer__links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer__links li {
+    margin-bottom: 0.7rem;
+}
+
+.footer__links li a {
+    color: var(--footer-link-color);
+    transition: color 0.3s ease;
+}
+
+.footer__links li a:hover {
+    color: var(--footer-link-hover-color);
+}
+
+.footer__logo a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--footer-text-color);
+    display: block;
+    margin-bottom: 1rem;
+}
+.footer__logo {
+    color: var(--footer-text-color);
+    font-size: 0.9rem;
+}
+
+.footer__col p {
+    color: var(--footer-text-color);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.footer__col form {
+    display: flex;
+    margin-top: 1rem;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.footer__col form input {
+    flex-grow: 1;
+    padding: 0.7rem 1rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.footer__col form .btn {
+    /* Botão de submit do footer usando variáveis gerais */
+    background-color: var(--button-general-bg-color);
+    color: var(--button-general-text-color);
+    border-radius: 0;
+    padding: 0.7rem 1rem;
+}
+
+.footer__col form .btn:hover {
+    background-color: var(--button-general-bg-hover-color);
+}
+
+.footer__socials {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.footer__socials li a {
+    font-size: 1.5rem;
+    color: var(--footer-text-color);
+    transition: color 0.3s ease;
+}
+
+.footer__socials li a:hover {
+    color: var(--footer-link-hover-color);
+}
+
+.footer__bar {
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--footer-text-color);
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 992px) {
+    .nav__links {
+        display: none; /* Esconde links em telas médias/pequenas */
+    }
+    .nav__menu__btn {
+        display: block; /* Mostra botão de menu */
+    }
+    .nav__actions {
+        display: none; /* Esconde botões de login/registro em mobile, serão parte do menu */
+    }
+
+    .nav__links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px; /* Altura da navbar */
+        left: 0;
+        width: 100%;
+        background-color: var(--white);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav__links.open .nav__actions-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        margin-top: 1rem;
+    }
+
+    .nav__links.open .nav__actions-mobile .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .intro__section h1 {
+        font-size: 3rem;
+    }
+    .intro__section h2 {
+        font-size: 1.8rem;
+    }
+    .intro__section p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav__header {
+        width: 100%;
+        justify-content: space-between;
+    }
+    nav {
+        padding: 10px 15px;
+    }
+
+    .footer__container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer__col form {
+        max-width: 300px;
+        margin: 1rem auto;
+    }
+
+    .footer__socials {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro__section h1 {
+        font-size: 2.5rem;
+    }
+    .intro__section h2 {
+        font-size: 1.5rem;
+    }
+    .services__grid {
+        grid-template-columns: 1fr;
+    }
+}

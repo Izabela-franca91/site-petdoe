@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro Pet Lovers</title>
+  <link rel="stylesheet" href="css do Cadastro.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div id="choiceScreen">
+    <h1>Bem-vindo(a) ao PetDoe!</h1>
+    <p>Como você deseja se cadastrar?</p>
+    <div class="choice-buttons">
+      <button id="btnRegisterUser" class="choice-button user-button">Sou um Usuário</button>
+      <button id="btnRegisterFreelancer" class="choice-button freelancer-button">Quero Trabalhar Aqui (Freelancer)</button>
+    </div>
+    <p class="switch-form"><a href="html do Login.html" id="backToLoginFromChoices">Voltar ao Login</a></p>
+  </div>
+
+  <div id="userRegistration" style="display: none;">
+    <h1>Cadastre-se como Usuário</h1>
+
+    <form id="formCadastroUsuario">
+      <h2>Dados Pessoais</h2>
+      <label for="userNome">Nome:</label>
+      <input type="text" id="userNome" name="userNome" required>
+      <label for="userNomeSocial">Nome Social:</label>
+      <input type="text" id="userNomeSocial" name="userNomeSocial">
+      <label>Gênero:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="userGenero" value="Prefiro não dizer" checked> Prefiro não dizer</label>
+        <label><input type="radio" name="userGenero" value="Masculino"> Masculino</label>
+        <label><input type="radio" name="userGenero" value="Feminino"> Feminino</label>
+      </div>
+      <label for="userCpf">CPF:</label>
+      <input type="text" id="userCpf" name="userCpf" required>
+      <label for="userEmail">E-mail:</label>
+      <input type="email" id="userEmail" name="userEmail" required>
+      <label for="userSenha">Senha:</label>
+      <input type="password" id="userSenha" name="userSenha" required>
+      <label for="userCelular">Celular:</label>
+      <input type="tel" id="userCelular" name="userCelular" required>
+      <label for="userDataNascimento">Data de Nascimento:</label>
+      <input type="date" id="userDataNascimento" name="userDataNascimento" required>
+
+      <h2>Endereço</h2>
+      <label for="userRua">Rua:</label>
+      <input type="text" id="userRua" name="userRua" required>
+      <label for="userNumero">Número:</label>
+      <input type="text" id="userNumero" name="userNumero" required>
+      <label for="userCidade">Cidade:</label>
+      <input type="text" id="userCidade" name="userCidade" required>
+      <label for="userEstado">Estado:</label>
+      <input type="text" id="userEstado" name="userEstado" required>
+
+      <button type="submit">Cadastrar como Usuário</button>
+      <p class="switch-form"><a href="#" id="backToChoiceUser">Voltar</a></p>
+    </form>
+
+    <div class="plans">
+      <div class="plan">
+        <h2>Plano Gratuito</h2>
+        <h3>ASSINATURA GRÁTIS</h3>
+        <ul>
+          <li>✔ Mapas</li>
+          <li>• Clínicas Veterinárias</li>
+          <li>• ONGs</li>
+          <li>• Castra Móvel</li>
+          <li>✔ Contatos de ONGs</li>
+          <li>✔ Plataforma de Freelance</li>
+          <li>✔ Lembretes de Vacinas</li>
+        </ul>
+        <div class="price">R$ 0,00</div>
+        <button class="btn-assinar" data-plano="gratuito">Assinar</button>
+      </div>
+
+      <div class="plan">
+        <h2>Plano Premium</h2>
+        <h3>ASSINATURA PREMIUM</h3>
+        <ul>
+          <li>✔ Clube de Descontos</li>
+          <li>• 15% off em Veterinários e Adestradores</li>
+          <li>• 10% off em Pet Sitter, Dog Walker e Hospedagem</li>
+          <li>• 10% off em Pet Shops</li>
+          <li>✔ Fórum Interativo</li>
+          <li>✔ Chatbot</li>
+        </ul>
+        <div class="price">R$ 15,90</div>
+        <button class="btn-assinar" data-plano="premium">Assinar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="freelancerRegistration" style="display: none;">
+    <h1>Cadastre-se como Freelancer</h1>
+
+    <form id="formCadastroFreelancer">
+      <h2>Dados do Profissional</h2>
+      <label for="freelancerNome">Nome Completo:</label>
+      <input type="text" id="freelancerNome" name="freelancerNome" required>
+
+      <label for="freelancerCpf">CPF:</label>
+      <input type="text" id="freelancerCpf" name="freelancerCpf" required>
+
+      <label for="freelancerDataNascimento">Data de Nascimento:</label>
+      <input type="date" id="freelancerDataNascimento" name="freelancerDataNascimento" required>
+
+      <label for="freelancerEmail">E-mail:</label>
+      <input type="email" id="freelancerEmail" name="freelancerEmail" required>
+      <label for="freelancerSenha">Senha:</label>
+      <input type="password" id="freelancerSenha" name="freelancerSenha" required>
+      <label for="freelancerCelular">Celular (WhatsApp):</label>
+      <input type="tel" id="freelancerCelular" name="freelancerCelular" required>
+      <label for="freelancerTipo">Tipo de Serviço:</label>
+      <select id="freelancerTipo" name="freelancerTipo" required>
+        <option value="">Selecione...</option>
+        <option value="Pet Sitter">Pet Sitter</option>
+        <option value="Dog Walker">Dog Walker</option>
+        <option value="Adestrador">Adestrador</option>
+        <option value="Veterinário">Veterinário</option>
+        <option value="Tutor de Pets">Tutor de Pets</option>
+        <option value="Outro">Outro</option>
+      </select>
+      <label for="freelancerDescricao">Conte um pouco sobre seu trabalho e experiência:</label>
+      <textarea id="freelancerDescricao" name="freelancerDescricao" rows="4" required></textarea>
+      <label for="freelancerCidade">Cidade de Atuação:</label>
+      <input type="text" id="freelancerCidade" name="freelancerCidade" required>
+      <label for="freelancerEstado">Estado de Atuação:</label>
+      <input type="text" id="freelancerEstado" name="freelancerEstado" required>
+      <label for="freelancerFoto">Sua Foto de Perfil:</label>
+      <input type="file" id="freelancerFoto" name="freelancerFoto" accept="image/*">
+
+      <div class="freelancer-plan-container"> <div class="plan freelancer-pro-plan">
+              <h2>Plano Pro</h2>
+              <h3>ASSINATURA PROFISSIONAL</h3>
+              <ul>
+                <li>✔ Acesso ao Catálogo de Freelancers</li>
+                <li>✔ Publicar seu Perfil de Freelancer</li>
+                <li>✔ Contato direto com Clientes</li>
+                <li>✔ Chatbot</li>
+                <li>✔ Fórum Interativo</li>
+              </ul>
+              <div class="price">R$ 39,99/mês</div>
+              <button type="button" class="btn-assinar" data-plano="pro-freelancer">Assinar Plano Pro</button>
+          </div>
+      </div>
+
+      <button type="submit">Finalizar Cadastro Freelancer</button>
+      <p class="switch-form"><a href="#" id="backToChoiceFreelancer">Voltar</a></p>
+    </form>
+  </div>
+</div>
+
+<script src="js do Cadastro.js"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Freelancers Pet</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Catálogo de Freelancers Pet</h1>
+  </header>
+
+  <main>
+    <section class="add-professional">
+      <h2>Adicionar Profissional</h2>
+      <input type="text" id="name" placeholder="Nome">
+      <input type="text" id="type" placeholder="Tipo (Pet Sitter, Veterinário...)">
+      <textarea id="description" placeholder="Descrição"></textarea>
+      <input type="text" id="phone" placeholder="Telefone">
+      <input type="file" id="photo" accept="image/*">
+      <button onclick="uploadProfessional()">Adicionar</button>
+    </section>
+
+    <section class="filters">
+      <label for="categorySelect">Filtrar por:</label>
+      <select id="categorySelect" onchange="filterProfessionals()">
+        <option value="Todos">Todos</option>
+        <option value="Pet Sitter">Pet Sitter</option>
+        <option value="Dog Walker">Dog Walker</option>
+        <option value="Adestrador">Adestrador</option>
+        <option value="Veterinário">Veterinário</option>
+      </select>
+    </section>
+
+    <section id="freelancerList" class="freelancer-list">
+      <!-- Profissionais renderizados via JS -->
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Comunidade Pet
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+}
+
+header {
+  background-color: #3aafa9;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.add-professional, .filters {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(58, 175, 169, 0.3);
+  margin-bottom: 20px;
+}
+
+.add-professional input,
+.add-professional textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.add-professional button {
+  background-color: #3aafa9;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-professional button:hover {
+  background-color: #2d8c88;
+}
+
+.filters select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.freelancer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.freelancer-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(58, 175, 169, 0.3);
+  width: 250px;
+  text-align: center;
+}
+
+.freelancer-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.freelancer-card h3 {
+  margin-top: 0;
+  color: #3aafa9;
+}
+
+.freelancer-card p {
+  margin: 5px 0;
+}
+
+.freelancer-card .rating {
+  color: #ffcc00;
+  font-size: 1.2em;
+}
+
+.freelancer-card button {
+  background-color: #3aafa9;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.freelancer-card button:hover {
+  background-color: #2d8c88;
+}
+
+footer {
+  text-align: center;
+  background-color: #3aafa9;
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+}
+-------------------------------------------------------------------------------
+
+// scripts.js
+
+// CONFIGURE AQUI COM SEUS DADOS DO FIREBASE
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_DOMINIO.firebaseapp.com",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_BUCKET.appspot.com",
+  messagingSenderId: "SEU_SENDER_ID",
+  appId: "SEU_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+const db = firebase.firestore();
+
+// Função para adicionar profissional
+function uploadProfessional() {
+  const name = document.getElementById('name').value;
+  const type = document.getElementById('type').value;
+  const description = document.getElementById('description').value;
+  const phone = document.getElementById('phone').value;
+  const photoFile = document.getElementById('photo').files[0];
+
+  if (!name || !type || !description || !phone || !photoFile) {
+    alert('Por favor, preencha todos os campos.');
+    return;
+  }
+
+  const storageRef = storage.ref(`freelancers/${Date.now()}_${photoFile.name}`);
+  storageRef.put(photoFile)
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(photoURL => {
+      return db.collection('freelancers').add({
+        name,
+        type,
+        description,
+        phone,
+        photo: photoURL,
+        rating: 0
+      });
+    })
+    .then(() => {
+      alert('Profissional adicionado com sucesso!');
+      document.getElementById('name').value = '';
+      document.getElementById('type').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('photo').value = '';
+      loadFreelancers();
+    })
+    .catch(error => {
+      console.error('Erro ao enviar:', error);
+      alert('Erro ao enviar profissional.');
+    });
+}
+
+// Função para renderizar profissionais
+function renderFreelancers(list) {
+  const container = document.getElementById('freelancerList');
+  container.innerHTML = '';
+
+  if (list.length === 0) {
+    container.innerHTML = '<p>Nenhum profissional encontrado.</p>';
+    return;
+  }
+
+  list.forEach(freelancer => {
+    const card = document.createElement('div');
+    card.className = 'freelancer-card';
+    card.innerHTML = `
+      <img src="${freelancer.photo}" alt="Foto de ${freelancer.name}">
+      <h3>${freelancer.name}</h3>
+      <p><strong>Tipo:</strong> ${freelancer.type}</p>
+      <p><strong>Descrição:</strong> ${freelancer.description}</p>
+      <p><strong>Telefone:</strong> ${freelancer.phone}</p>
+      <p class="rating">⭐ ${freelancer.rating.toFixed(1)}</p>
+      <button onclick="sendMessage('${freelancer.name}')">Enviar Mensagem</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Função para filtrar profissionais
+function filterProfessionals() {
+  const selectedType = document.getElementById('categorySelect').value;
+  if (selectedType === 'Todos') {
+    loadFreelancers();
+  } else {
+    db.collection('freelancers').where('type', '==', selectedType).get()
+      .then(snapshot => {
+        const data = [];
+        snapshot.forEach(doc => {
+          data.push(doc.data());
+        });
+        renderFreelancers(data);
+      })
+      .catch(error => {
+        console.error('Erro ao filtrar profissionais:', error);
+      });
+  }
+}
+
+// Simulação de envio de mensagem
+function sendMessage(name) {
+  alert(`Mensagem enviada para ${name}!`);
+}
+
+// Função para carregar profissionais
+function loadFreelancers() {
+  db.collection('freelancers').get()
+    .then(snapshot => {
+      const data = [];
+      snapshot.forEach(doc => {
+        data.push(doc.data());
+      });
+      renderFreelancers(data);
+    })
+    .catch(error => {
+      console.error('Erro ao buscar profissionais:', error);
+    });
+}
+
+// Inicializa a lista
+loadFreelancers();
+

@@ -1,0 +1,219 @@
+/*
+ * register.css
+ * Este arquivo contém todos os estilos para as páginas de cadastro (escolha, usuário, freelancer).
+ * Inclui estilos base e específicos.
+ */
+
+body {
+    background-image: url('https://img.freepik.com/vetores-gratis/patas-fofas-e-caricaturais-de-fundo-padrao-para-criancas_1017-44587.jpg?w=1380&t=st=1691617607~exp=1691618207~hmac=b00bf749c8f100886d82444ff89553bad94cd9a20a493292972fc84df3ae9cb0');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #4af1f78f;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #000000;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ffaf47;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.radio-group label {
+    font-weight: normal;
+}
+
+button {
+    margin-top: 25px;
+    background-color: #cf1414;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a60f0f;
+}
+
+form button,
+.plan .btn-assinar {
+    display: block;
+    margin: 25px auto 0;
+}
+
+.switch-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.switch-form a {
+    color: #cf1414;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos específicos da tela de cadastro (escolha, usuário, freelancer) */
+
+.choice-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.choice-button {
+    width: 70%;
+    padding: 15px;
+    font-size: 18px;
+    margin: 0 auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-button {
+    background-color: #ff6f6f;
+}
+
+.user-button:hover {
+    background-color: #40cee0;
+}
+
+.freelancer-button {
+    background-color: #ffd75e;
+}
+
+.freelancer-button:hover {
+    background-color: #40cee0;
+}
+
+.plans {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.plan {
+    flex: 1 1 300px;
+    max-width: 400px;
+    background-color: #ffacac;
+    padding: 20px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.plan h2 {
+    margin-top: 0;
+    color: #0c0606;
+}
+
+.plan ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: left;
+}
+
+.plan li {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #cf1414;
+}
+
+.freelancer-plan-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.freelancer-pro-plan {
+    flex: none;
+    width: 300px;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 15px auto;
+        padding: 20px;
+    }
+
+    .plans {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan {
+        width: 100%;
+    }
+
+    .choice-buttons {
+        width: 100%;
+    }
+
+    .choice-button {
+        width: 90%;
+    }
+
+    .freelancer-pro-plan {
+        width: 100%;
+    }
+}
